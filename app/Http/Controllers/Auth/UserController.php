@@ -87,12 +87,8 @@ class UserController extends Controller implements HasMiddleware
             'email'      => 'required|email|unique:users',
             'password'   => 'required|confirmed|min:6',
         ]);
-
         try {
             $user = User::create($request->all());
-            if (isNull($user->email_verified_at)) {
-                return $this->success(['we are send verify link to your email.']);
-            }
             return $this->success($user);
         } catch (Exception $e) {
             Log::error($e->getMessage() . ' register error');
